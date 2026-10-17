@@ -1,0 +1,179 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f5fa;
+  color: #26344a;
+}
+
+header {
+  background: #203f70;
+  color: white;
+  padding: 22px;
+  text-align: center;
+}
+
+header h2 {
+  margin: 0 0 8px;
+}
+
+header p {
+  margin: 0;
+  color: #dce6f5;
+}
+
+main {
+  max-width: 700px;
+  margin: 35px auto;
+  padding: 28px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 22px #26344a12;
+}
+
+h1 {
+  text-align: center;
+  color: #203f70;
+  font-size: 28px;
+}
+
+.intro {
+  text-align: center;
+  color: #718096;
+  margin-bottom: 30px;
+}
+
+h3 {
+  color: #203f70;
+  margin-top: 28px;
+  border-bottom: 1px solid #e4e9f1;
+  padding-bottom: 10px;
+}
+
+form > label {
+  display: block;
+  margin: 17px 0 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input:not([type="checkbox"]), select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccd5e2;
+  border-radius: 6px;
+  font: inherit;
+  background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #8aaddd;
+  border-color: #3767a8;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.check {
+  display: flex !important;
+  align-items: center;
+  gap: 9px;
+  font-weight: normal !important;
+  line-height: 1.5;
+}
+
+.check input {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  border: none;
+  border-radius: 6px;
+  background: #203f70;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #152e53;
+}
+
+.success {
+  color: #166534;
+  background: #dcfce7;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.error {
+  color: #991b1b;
+  background: #fee2e2;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.students {
+  margin-top: 35px;
+  border-top: 1px solid #e4e9f1;
+  padding-top: 15px;
+}
+
+.students h2 {
+  font-size: 21px;
+}
+
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #dce3ed;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: #eaf0f9;
+}
+
+footer {
+  text-align: center;
+  color: #718096;
+  font-size: 13px;
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  main {
+    margin: 18px 12px;
+    padding: 18px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+
+  table {
+    font-size: 11px;
+  }
+
+  th, td {
+    padding: 6px;
+  }
+}

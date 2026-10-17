@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Registration Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h2>CampusConnect</h2>
+    <p>Student Registration Portal</p>
+  </header>
+
+  <main>
+    <h1>College Registration Form</h1>
+    <p class="intro">Enter your personal and academic details below.</p>
+
+    <form id="registrationForm">
+      <h3>Personal Details</h3>
+
+      <label>Full Name *</label>
+      <input type="text" name="name" minlength="3" required>
+
+      <label>Date of Birth *</label>
+      <input type="date" name="dob" id="dob" required>
+
+      <label>Gender *</label>
+      <select name="gender" required>
+        <option value="">Select Gender</option>
+        <option>Female</option>
+        <option>Male</option>
+        <option>Other</option>
+      </select>
+
+      <label>Email Address *</label>
+      <input type="email" name="email" required>
+
+      <label>Mobile Number *</label>
+      <input type="tel" name="mobile" pattern="[0-9]{10}"
+        maxlength="10" required>
+
+      <label>Residential Address *</label>
+      <textarea name="address" minlength="10" rows="3" required></textarea>
+
+      <h3>Academic Details</h3>
+
+      <label>Course *</label>
+      <select name="course" required>
+        <option value="">Select Course</option>
+        <option>B.Sc. Information Technology</option>
+        <option>B.Sc. Computer Science</option>
+        <option>B.Com.</option>
+        <option>B.A.</option>
+        <option>BMS</option>
+      </select>
+
+      <label>Academic Year *</label>
+      <select name="year" required>
+        <option value="">Select Year</option>
+        <option>First Year</option>
+        <option>Second Year</option>
+        <option>Third Year</option>
+      </select>
+
+      <label>Previous Exam Percentage *</label>
+      <input type="number" name="percentage"
+        min="0" max="100" step="0.01" required>
+
+      <label class="check">
+        <input type="checkbox" required>
+        I confirm that the information provided is correct.
+      </label>
+
+      <button type="submit">Submit Registration</button>
+      <p id="message" role="status"></p>
+    </form>
+
+    <section class="students">
+      <h2>Registered Students</h2>
+      <button type="button" id="viewButton">View Students</button>
+      <div id="studentList"></div>
+    </section>
+  </main>
+
+  <footer>College Registration Portal | Web Technology Project</footer>
+
+  <script>
+    const form = document.getElementById("registrationForm");
+    const message = document.getElementById("message");
+    const dob = document.getElementById("dob");
+
+    dob.max = new Date().toLocaleDateString("en-CA");
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      message.textContent = "";
+
+      try {
+        const data = Object.fromEntries(new FormData(form));
+
+        const response = await fetch("/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.message);
+
+        message.textContent = result.message;
+        message.className = "success";
+        form.reset();
+        dob.max = new Date().toLocaleDateString("en-CA");
+      } catch (error) {
+        message.textContent = error.message || "Unable to submit form.";
+        message.className = "error";
+      }
+    });
+
+    document.getElementById("viewButton").addEventListener("click", async () => {
+      const list = document.getElementById("studentList");
+
+      try {
+        const response = await fetch("/students");
+        if (!response.ok) throw new Error("Could not load students.");
+
+        const students = await response.json();
+        list.replaceChildren();
+
+        if (!students.length) {
+          list.textContent = "No registrations yet.";
+          return;
+        }
+
+        const table = document.createElement("table");
+        const headings = ["Name", "Course", "Year", "Email"];
+        const header = table.createTHead().insertRow();
+
+        headings.forEach(text => {
+          const th = document.createElement("th");
+          th.textContent = text;
+          header.appendChild(th);
+        });
+
+        const body = table.createTBody();
+
+        students.forEach(student => {
+          const row = body.insertRow();
+          [student.name, student.course, student.year, student.email]
+            .forEach(value => {
+              const cell = row.insertCell();
+              cell.textContent = value;
+            });
+        });
+
+        list.appendChild(table);
+      } catch {
+        list.textContent = "Unable to load student records.";
+      }
+    });
+  </script>
+</body>
+</html>
